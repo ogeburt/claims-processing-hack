@@ -87,18 +87,7 @@ A powerful multimodal model that can process both text and images with high accu
 
 GPT-4.1-mini offers an excellent balance between cost, speed, and performance for document processing tasks, making it ideal for processing both policy documents and visual claim evidence.
 
-## Part 1 - Policy Document Processing
-
-Time to process your insurance policy documents! Please navigate to `scripts/policiesprocessing.ipynb` for a comprehensive walkthrough on:
-- Setting up Azure Blob Storage for document management
-- Processing text-based policy documents using GPT-4-1-mini
-- Extracting structured information from policy markdown files
-- Creating vectorized embeddings for semantic search
-- Uploading processed documents to Azure AI Search
-
-This notebook demonstrates how to transform unstructured policy text into a searchable knowledge base that agents can query intelligently.
-
-## Part 2 - Image and Claims Processing
+## Part 1 - Image and Claims Processing
 
 Time to extract information from claim images! Please navigate to `scripts/imageprocessing.ipynb` for a detailed implementation of:
 - Processing insurance claim photos and accident documentation
@@ -108,6 +97,17 @@ Time to extract information from claim images! Please navigate to `scripts/image
 - Integrating visual claim evidence into Azure AI Search
 
 This notebook showcases multimodal AI processing techniques for analyzing damage photos and extracting critical claim information from visual content.
+
+## Part 2 - Policy Document Processing
+
+Time to process your insurance policy documents! Please navigate to `scripts/policiesprocessing.ipynb` for a comprehensive walkthrough on:
+- Setting up Azure Blob Storage for document management
+- Processing text-based policy documents using GPT-4-1-mini
+- Extracting structured information from policy markdown files
+- Creating vectorized embeddings for semantic search
+- Uploading processed documents to Azure AI Search
+
+This notebook demonstrates how to transform unstructured policy text into a searchable knowledge base that agents can query intelligently.
 
 Great! If you are finished and ready for extra challenges, there's much more to explore!
 

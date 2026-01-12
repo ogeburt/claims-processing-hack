@@ -8,13 +8,13 @@ Today, you'll dive into the world of intelligent agent systems powered by Azure 
 
 Get ready to transform insurance claims processing with AI using cutting-edge technologies from Azure AI! In this hackathon, you'll master multimodal document processing, vectorized search, and intelligent agent orchestration to build a production-ready claims processing system that understands policy documents, analyzes damage photos, and validates claims—just like experienced insurance adjusters, but faster and more consistent.
 
-Using GPT-4o's multimodal capabilities, Azure AI Search with integrated vectorization, and the Microsoft Agent Framework, you'll create a sophisticated document processing pipeline that handles text, images, and handwritten statements seamlessly. From environment setup through document processing to intelligent agent creation, you'll build a complete system that automates complex insurance workflows while maintaining transparency and accuracy.
+Using GPT-4.1-mini's multimodal capabilities, Azure AI Search with integrated vectorization, and the Microsoft Agent Framework, you'll create a sophisticated document processing pipeline that handles text, images, and handwritten statements seamlessly. From environment setup through document processing to intelligent agent creation, you'll build a complete system that automates complex insurance workflows while maintaining transparency and accuracy.
 
 ## Learning Objectives 🎯
 
 By participating in this hackathon, you will learn how to:
 
-- **Process Multimodal Documents** using GPT-4o to extract and understand information from text documents, images, and handwritten statements with advanced OCR and vision capabilities.
+- **Process Multimodal Documents** using GPT-4.1-mini to extract and understand information from text documents, images, and handwritten statements with advanced OCR and vision capabilities.
 - **Build Vectorized Search Systems** with Azure AI Search's integrated vectorization to enable semantic search across insurance policies, claims, and statements using hybrid search (keyword + vector + semantic).
 - **Create Intelligent AI Agents** using Microsoft Agent Framework and Microsoft Foundry to orchestrate document processing workflows, make intelligent decisions, and validate claim information.
 - **Implement Function Calling/Tools** to extend agent capabilities with custom tools for OCR, document parsing, policy validation, and claim assessment.
@@ -39,7 +39,7 @@ To successfully complete this hackathon, you will need the following:
 - **Challenge 01**: **[Document Processing and Vectorized Search](challenge-1/README.md)**: Build a comprehensive document processing and search system using GPT-4-1-mini for multimodal processing, implement Azure AI Search with integrated vectorization for semantic retrieval, create hybrid search capabilities (keyword + vector + semantic), and establish the knowledge base foundation for AI agents
 - **Challenge 02**: **[Build an AI Agent for Claims Processing](challenge-2/README.md)**: Create an intelligent AI agent using Microsoft Agent Framework and Microsoft Foundry that autonomously orchestrates the document processing pipeline from Challenge 1, implements agent tools for OCR and policy validation, makes intelligent decisions about claim processing, and generates structured outputs
 - **Challenge 03**: **[Observability and Monitoring for AI Agents](challenge-3/README.md)**: Implement comprehensive observability for your Claims Processing Agent using Microsoft Foundry's capabilities—set up OpenTelemetry tracing, configure continuous evaluation for quality and safety metrics, integrate Application Insights, and establish proactive alerting for production systems
-- **Challenge 04**: **[Agent Deployment](challenge-4/README.md)**: *Coming Soon* - Deploy your AI agent to production in Azure with comprehensive monitoring, implement scaling strategies, and establish observability for production-ready systems
+- **Challenge 04**: **[Agent Orchestration and MCP Server Deployment](challenge-4/README.md)**: Orchestrate the OCR and JSON Structuring agents into a multi-agent workflow using Microsoft Agent Framework, implement workflow executors with typed message passing, deploy the workflow as a Model Context Protocol (MCP) server, and integrate with VS Code, Claude Desktop, or other MCP-compatible platforms for reusable AI tooling
 
 
 ## Contributing

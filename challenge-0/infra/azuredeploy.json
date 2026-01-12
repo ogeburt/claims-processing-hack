@@ -33,6 +33,8 @@
     "applicationInsightsName": "[format('{0}-appinsights-{1}', variables('prefix'), variables('suffix'))]",
     "cosmosDbAccountName": "[format('{0}-cosmos-{1}', variables('prefix'), variables('suffix'))]",
     "documentIntelligenceName": "[format('{0}-docintel-{1}', variables('prefix'), variables('suffix'))]",
+    "containerAppEnvironmentName": "[format('{0}-caenv-{1}', variables('prefix'), variables('suffix'))]",
+    "apiManagementName": "[format('{0}-apim-{1}', variables('prefix'), variables('suffix'))]",
     "cognitiveServicesUserRoleId": "[subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'a97b65f3-24c7-4388-baec-2e87135dc908')]",
     "searchServiceContributorRoleId": "[subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '7ca78c08-252a-4471-8644-bb5ff32d4ba0')]",
     "aiDeveloperRoleId": "[subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '64702f94-c441-49e6-a78b-ef80e0188fee')]",
@@ -149,6 +151,41 @@
       "dependsOn": [
         "[resourceId('Microsoft.OperationalInsights/workspaces', variables('logAnalyticsWorkspaceName'))]"
       ]
+    },
+    {
+      "type": "Microsoft.App/managedEnvironments",
+      "apiVersion": "2023-05-01",
+      "name": "[variables('containerAppEnvironmentName')]",
+      "location": "[parameters('location')]",
+      "tags": "[variables('tags')]",
+      "properties": {
+        "appLogsConfiguration": {
+          "destination": "log-analytics",
+          "logAnalyticsConfiguration": {
+            "customerId": "[reference(resourceId('Microsoft.OperationalInsights/workspaces', variables('logAnalyticsWorkspaceName')), '2021-06-01').customerId]",
+            "sharedKey": "[listKeys(resourceId('Microsoft.OperationalInsights/workspaces', variables('logAnalyticsWorkspaceName')), '2021-06-01').primarySharedKey]"
+          }
+        }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.OperationalInsights/workspaces', variables('logAnalyticsWorkspaceName'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.ApiManagement/service",
+      "apiVersion": "2023-05-01-preview",
+      "name": "[variables('apiManagementName')]",
+      "location": "[parameters('location')]",
+      "tags": "[variables('tags')]",
+      "sku": {
+        "name": "BasicV2",
+        "capacity": 1
+      },
+      "properties": {
+        "publisherEmail": "admin@contoso.com",
+        "publisherName": "Claims Processing Admin",
+        "notificationSenderEmail": "apimgmt-noreply@mail.windowsazure.com"
+      }
     },
     {
       "type": "Microsoft.CognitiveServices/accounts",
@@ -413,6 +450,22 @@
     "documentIntelligenceEndpoint": {
       "type": "string",
       "value": "[reference(resourceId('Microsoft.CognitiveServices/accounts', variables('documentIntelligenceName')), '2024-10-01').endpoint]"
+    },
+    "containerAppEnvironmentName": {
+      "type": "string",
+      "value": "[variables('containerAppEnvironmentName')]"
+    },
+    "containerAppEnvironmentId": {
+      "type": "string",
+      "value": "[resourceId('Microsoft.App/managedEnvironments', variables('containerAppEnvironmentName'))]"
+    },
+    "apiManagementName": {
+      "type": "string",
+      "value": "[variables('apiManagementName')]"
+    },
+    "apiManagementGatewayUrl": {
+      "type": "string",
+      "value": "[reference(resourceId('Microsoft.ApiManagement/service', variables('apiManagementName')), '2023-05-01-preview').gatewayUrl]"
     }
   }
 }

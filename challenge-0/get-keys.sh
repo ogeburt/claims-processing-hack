@@ -55,12 +55,15 @@ keyVaultName=$(az deployment group show --resource-group $resourceGroupName --na
 containerRegistryName=$(az deployment group show --resource-group $resourceGroupName --name $deploymentName --query "properties.outputs.containerRegistryName.value" -o tsv 2>/dev/null || echo "")
 applicationInsightsName=$(az deployment group show --resource-group $resourceGroupName --name $deploymentName --query "properties.outputs.applicationInsightsName.value" -o tsv 2>/dev/null || echo "")
 documentIntelligenceName=$(az deployment group show --resource-group $resourceGroupName --name $deploymentName --query "properties.outputs.documentIntelligenceName.value" -o tsv 2>/dev/null || echo "")
+apiManagementName=$(az deployment group show --resource-group $resourceGroupName --name $deploymentName --query "properties.outputs.apiManagementName.value" -o tsv 2>/dev/null || echo "")
 
 # Extract endpoint URLs
 searchServiceEndpoint=$(az deployment group show --resource-group $resourceGroupName --name $deploymentName --query "properties.outputs.searchServiceEndpoint.value" -o tsv 2>/dev/null || echo "")
 aiFoundryHubEndpoint=$(az deployment group show --resource-group $resourceGroupName --name $deploymentName --query "properties.outputs.aiFoundryHubEndpoint.value" -o tsv 2>/dev/null || echo "")
 aiFoundryProjectEndpoint=$(az deployment group show --resource-group $resourceGroupName --name $deploymentName --query "properties.outputs.aiFoundryProjectEndpoint.value" -o tsv 2>/dev/null || echo "")
 documentIntelligenceEndpoint=$(az deployment group show --resource-group $resourceGroupName --name $deploymentName --query "properties.outputs.documentIntelligenceEndpoint.value" -o tsv 2>/dev/null || echo "")
+containerAppEnvironmentName=$(az deployment group show --resource-group $resourceGroupName --name $deploymentName --query "properties.outputs.containerAppEnvironmentName.value" -o tsv 2>/dev/null || echo "")
+apiManagementGatewayUrl=$(az deployment group show --resource-group $resourceGroupName --name $deploymentName --query "properties.outputs.apiManagementGatewayUrl.value" -o tsv 2>/dev/null || echo "")
 
 
 
@@ -175,6 +178,16 @@ else
     echo "Warning: Search service not found"
     searchServiceKey=""
     searchServiceEndpoint=""
+fi
+
+# API Management
+if [ -n "$apiManagementName" ]; then
+    if [ -z "$apiManagementGatewayUrl" ]; then
+        apiManagementGatewayUrl=$(az apim show --name $apiManagementName --resource-group $resourceGroupName --query gatewayUrl -o tsv 2>/dev/null || echo "")
+    fi
+else
+    echo "Warning: API Management not found"
+    apiManagementGatewayUrl=""
 fi
 
 # Application Insights
@@ -309,11 +322,28 @@ echo "MISTRAL_DOCUMENT_AI_KEY=\"$aiFoundryKey\"" >> ../.env
 echo "DOCUMENT_INTELLIGENCE_ENDPOINT=\"$documentIntelligenceEndpoint\"" >> ../.env
 echo "DOCUMENT_INTELLIGENCE_KEY=\"$documentIntelligenceKey\"" >> ../.env
 
+# Container Apps
+echo "CONTAINER_APP_ENVIRONMENT_NAME=\"$containerAppEnvironmentName\"" >> ../.env
+
+# Resource Group  
+echo "AZURE_RESOURCE_GROUP=\"$resourceGroupName\"" >> ../.env
+
+# API Management
+echo "API_MANAGEMENT_NAME=\"$apiManagementName\"" >> ../.env
+echo "API_MANAGEMENT_GATEWAY_URL=\"$apiManagementGatewayUrl\"" >> ../.env
+
+# Container Registry (with both naming conventions)
+echo "ACR_NAME=\"$containerRegistryName\"" >> ../.env
+echo "AZURE_CONTAINER_REGISTRY_NAME=\"$containerRegistryName\"" >> ../.env
+echo "ACR_USERNAME=\"$acr_username\"" >> ../.env
+echo "ACR_PASSWORD=\"$acr_password\"" >> ../.env
+
 echo "Keys and properties are stored in '.env' file successfully."
 
 # Display summary of what was configured
 echo ""
 echo "=== Configuration Summary ==="
+echo "Resource Group: $resourceGroupName"
 echo "Storage Account: $storageAccountName"
 echo "Log Analytics Workspace: $logAnalyticsWorkspaceName"
 echo "Search Service: $searchServiceName"
@@ -323,10 +353,8 @@ echo "AI Foundry Project: $aiFoundryProjectName"
 echo "Key Vault: $keyVaultName"
 echo "Container Registry: $containerRegistryName"
 echo "Application Insights: $applicationInsightsName"
+echo "Container App Environment: $containerAppEnvironmentName"
 echo "Document Intelligence: $documentIntelligenceName"
-echo "ACR_NAME=\"$containerRegistryName\"" >> ../.env
-echo "ACR_USERNAME=\"$acr_username\"" >> ../.env
-echo "ACR_PASSWORD=\"$acr_password\"" >> ../.env
 
 if [ -n "$cosmosDbAccountName" ]; then
     echo "Cosmos DB: $cosmosDbAccountName"

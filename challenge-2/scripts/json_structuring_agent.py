@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 """
 JSON Structuring Agent - Converts OCR text into structured JSON format.
-Uses GPT-4o-mini to parse OCR results and create structured claim data.
+Uses GPT-4.1-mini to parse OCR results and create structured claim data.
 
 Usage:
-    python json_structuring_agent.py [OCR_TEXT_FILE]
+    python json_structuring_agent.py <ocr_result.json or ocr_text.txt>
     
-Example:
-    python json_structuring_agent.py ocr_output.txt
+Example with OCR JSON output:
+    python json_structuring_agent.py ../ocr_results/crash1_front_ocr_result.json
+    
 """
 import os
 import sys
