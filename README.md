@@ -11,146 +11,40 @@ Transform insurance claims processing into an AI-native, enterprise-ready system
 ## Architecture Overview
 
 ```mermaid
-flowchart TB
-    subgraph Challenge0["Challenge 0: Environment Setup"]
-        GH[GitHub Codespaces]
-        ARM[Azure ARM Template]
-        ENV[Environment Variables]
-        
-        GH --> ARM
-        ARM --> AzureRes
-        ARM --> ENV
-        
-        subgraph AzureRes["Azure Resources"]
-            FOUNDRY[Microsoft Foundry<br/>ai.azure.com]
-            SEARCH[Azure AI Search]
-            BLOB[Azure Blob Storage]
-            INSIGHTS[Application Insights]
-            ACR[Azure Container Registry]
-            ACA[Azure Container Apps]
-        end
+flowchart LR
+    subgraph Input["📄 Input"]
+        IMG[Claim Images]
+        DOCS[Policy Documents]
     end
 
-    subgraph Challenge1["Challenge 1: Document Processing & Vectorized Search"]
-        subgraph DataSources["Insurance Data"]
-            CLAIMS[Crash Images<br/>crash1-5.jpg]
-            POLICIES[Policy Documents<br/>5 markdown files]
-            STATEMENTS[Claim Statements<br/>Front & Back images]
-        end
-        
-        subgraph Processing["Document Processing Options"]
-            GPT4["GPT-4.1-mini<br/>Multimodal Vision"]
-            MISTRAL["Mistral Document AI<br/>Fast OCR"]
-            DOCINT["Azure Document<br/>Intelligence"]
-        end
-        
-        DataSources --> Processing
-        Processing --> VECTOR["Vectorized<br/>Knowledge Base"]
-        VECTOR --> SEARCH
-        BLOB --> DataSources
+    subgraph Processing["🤖 AI Processing"]
+        OCR[OCR Agent<br/>Mistral AI]
+        JSON[JSON Agent<br/>GPT-4.1-mini]
+        OCR --> JSON
     end
 
-    subgraph Challenge2["Challenge 2: AI Agents"]
-        subgraph OCRAgent["OCR Agent"]
-            OCR_IN[Image Input]
-            OCR_MISTRAL[Mistral Document AI]
-            OCR_OUT[Extracted Text JSON]
-            
-            OCR_IN --> OCR_MISTRAL --> OCR_OUT
-        end
-        
-        subgraph JSONAgent["JSON Structuring Agent"]
-            JSON_IN[OCR Text Input]
-            JSON_GPT[GPT-4.1-mini]
-            JSON_OUT[Structured Claim JSON]
-            
-            JSON_IN --> JSON_GPT --> JSON_OUT
-        end
-        
-        subgraph AgentTools["Agent Tools"]
-            TOOL1[Image Text Extraction]
-            TOOL2[Policy Document Parser]
-            TOOL3[Claim Amount Validation]
-            TOOL4[Policy Coverage Assessment]
-        end
-        
-        FOUNDRY --> OCRAgent
-        FOUNDRY --> JSONAgent
-        OCRAgent --> JSONAgent
+    subgraph Platform["☁️ Azure Platform"]
+        FOUNDRY[Microsoft Foundry]
+        SEARCH[AI Search]
+        INSIGHTS[App Insights]
     end
 
-    subgraph Challenge3["Challenge 3: Observability & Monitoring"]
-        subgraph Tracing["OpenTelemetry Tracing"]
-            SPANS[Spans - Tool Calls]
-            TRACES[Traces - Full Journey]
-            ATTRS[Attributes & Metadata]
-        end
-        
-        subgraph Evaluation["Continuous Evaluation"]
-            PREEVAL[Pre-Production Testing]
-            POSTEVAL[Post-Production Monitoring]
-            REDTEAM[AI Red Teaming]
-        end
-        
-        subgraph Alerts["Alerting System"]
-            QUALITY[Quality Metrics]
-            SAFETY[Safety Metrics]
-            FEEDBACK[User Feedback]
-        end
-        
-        OCRAgent --> Tracing
-        JSONAgent --> Tracing
-        Tracing --> INSIGHTS
-        Evaluation --> INSIGHTS
+    subgraph Deployment["🚀 Deployment"]
+        API[REST API<br/>FastAPI]
+        ACA[Container Apps]
+        UI[Streamlit UI]
     end
 
-    subgraph Challenge4["Challenge 4: Multi-Agent Workflow & API"]
-        subgraph Orchestrator["Workflow Orchestrator"]
-            WF_START([Claim Image])
-            WF_OCR[Step 1: OCR Agent]
-            WF_JSON[Step 2: JSON Agent]
-            WF_END([Structured Data])
-            
-            WF_START --> WF_OCR --> WF_JSON --> WF_END
-        end
-        
-        subgraph RESTAPI["FastAPI Server"]
-            EP_HEALTH["/health"]
-            EP_UPLOAD["/process-claim/upload"]
-            EP_BASE64["/process-claim/base64"]
-        end
-        
-        subgraph Deployment["Cloud Deployment"]
-            DOCKER[Docker Container]
-            ACA_DEPLOY[Azure Container Apps]
-        end
-        
-        Orchestrator --> RESTAPI
-        RESTAPI --> DOCKER --> ACA_DEPLOY
-    end
-
-    subgraph Challenge5["Challenge 5: Web UI"]
-        STREAMLIT[Streamlit App<br/>localhost:8501]
-        UPLOAD[File Upload]
-        PREVIEW[Image Preview]
-        RESULTS[Structured Results Display]
-        
-        UPLOAD --> STREAMLIT
-        STREAMLIT --> PREVIEW
-        STREAMLIT --> RESULTS
-    end
-
-    %% Cross-challenge connections
-    Challenge0 --> Challenge1
-    Challenge1 --> Challenge2
-    Challenge2 --> Challenge3
-    Challenge2 --> Challenge4
-    Challenge4 --> Challenge5
-    
-    %% API Integration
-    STREAMLIT -->|"HTTP POST"| EP_UPLOAD
-    EP_UPLOAD -->|"Response JSON"| RESULTS
+    IMG --> OCR
+    DOCS --> SEARCH
+    FOUNDRY --> Processing
+    JSON --> API
+    API --> ACA
+    ACA --> UI
+    Processing --> INSIGHTS
 ```
+
+
 
 ## Learning Objectives 🎯
 
