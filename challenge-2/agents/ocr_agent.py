@@ -229,10 +229,14 @@ def main():
     
     try:
         # Get image path from CLI args or use default
-        test_image_path = sys.argv[1] if len(sys.argv) > 1 else "/workspaces/claims-processing-hack/challenge-0/data/statements/crash1_front.jpeg"
-        
-        # Create output directory for OCR results
-        output_dir = "/workspaces/claims-processing-hack/challenge-2/ocr_results"
+        root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+        default_image_path = os.path.join(
+            root_dir, "challenge-0", "data", "statements", "crash1_front.jpeg"
+        )
+        test_image_path = sys.argv[1] if len(sys.argv) > 1 else default_image_path
+
+        # Create output directory for OCR results (relative to project root)
+        output_dir = os.path.join(root_dir, "challenge-2", "ocr_results")
         os.makedirs(output_dir, exist_ok=True)
         
         # Create AI Project Client
@@ -267,9 +271,11 @@ You are designed to be a reliable, accurate OCR processing service for insurance
             except Exception:
                 # Agent doesn't exist, create it
                 base_agent = project_client.agents.create(
-                    agent_name=agent_name,
-                    model=model_deployment_name,
-                    instructions=agent_instructions,
+                    name=agent_name,
+                    definition=PromptAgentDefinition(
+                        model=model_deployment_name,
+                        instructions=agent_instructions,
+                    )
                 )
                 print(f"✅ Created persistent agent in Foundry: {base_agent.name}")
             
