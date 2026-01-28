@@ -125,7 +125,7 @@ cd challenge-4
 python api_server.py
 ```
 
-The server will start on `http://localhost:8000`
+The server will start on `http://localhost:8080`
 
 #### 2.2 Test with Python Client
 
@@ -147,7 +147,7 @@ Open and review [`Dockerfile`](Dockerfile):
 - Uses Python 3.11 slim base image
 - Installs dependencies from `requirements.txt`
 - Copies application files and OCR agent scripts
-- Exposes port 8000
+- Exposes port 8080
 - Runs `api_server.py` as the entrypoint
 
 #### 3.2 Build the Docker Image
@@ -166,7 +166,7 @@ cd /workspaces/claims-processing-hack
 source .env
 
 # Run the container
-docker run -p 8000:8000 \
+docker run -p 8080:8080 \
   -e AI_FOUNDRY_PROJECT_ENDPOINT="$AI_FOUNDRY_PROJECT_ENDPOINT" \
   -e MODEL_DEPLOYMENT_NAME="$MODEL_DEPLOYMENT_NAME" \
   -e MISTRAL_DOCUMENT_AI_ENDPOINT="$MISTRAL_DOCUMENT_AI_ENDPOINT" \
@@ -175,7 +175,7 @@ docker run -p 8000:8000 \
   claims-processing-api:latest
 
 # Test in another terminal
-curl http://localhost:8000/health
+curl http://localhost:8080/health
 ```
 
 ### Task 4: Deploy to Azure Container Apps

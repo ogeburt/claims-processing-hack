@@ -99,12 +99,12 @@ test_api() {
 # Main test logic
 if [ $# -eq 0 ]; then
     # Test local server
-    echo "🏠 Testing LOCAL server (http://localhost:8000)"
+    echo "🏠 Testing LOCAL server (http://localhost:8080)"
     echo ""
     
     # Check if server is running
-    if ! curl -s http://localhost:8000/health > /dev/null 2>&1; then
-        echo "❌ Local server not running at http://localhost:8000"
+    if ! curl -s http://localhost:8080/health > /dev/null 2>&1; then
+        echo "❌ Local server not running at http://localhost:8080"
         echo ""
         echo "To start the server, run:"
         echo "  python api_server.py"
@@ -112,7 +112,7 @@ if [ $# -eq 0 ]; then
         exit 1
     fi
     
-    test_api "http://localhost:8000"
+    test_api "http://localhost:8080"
     
 else
     # Test provided URL

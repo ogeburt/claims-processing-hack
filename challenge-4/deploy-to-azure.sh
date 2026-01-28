@@ -75,7 +75,7 @@ else
         --resource-group $RESOURCE_GROUP \
         --environment $ENVIRONMENT_NAME \
         --image $ACR_NAME.azurecr.io/$IMAGE_NAME:$IMAGE_TAG \
-        --target-port 8000 \
+        --target-port 8080 \
         --ingress external \
         --registry-server $ACR_NAME.azurecr.io \
         --cpu 1.0 \
