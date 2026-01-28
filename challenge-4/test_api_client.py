@@ -5,7 +5,6 @@ Test client for Claims Processing API
 import os
 import sys
 import json
-import base64
 import httpx
 import asyncio
 from pathlib import Path
@@ -32,31 +31,6 @@ async def test_api_upload(api_url: str, image_path: str):
         return response.json()
 
 
-async def test_api_base64(api_url: str, image_path: str):
-    """Test the API using base64 encoding"""
-    print(f"🧪 Testing API with base64 encoding: {image_path}")
-    
-    # Read and encode image
-    with open(image_path, "rb") as f:
-        image_data = f.read()
-        image_base64 = base64.b64encode(image_data).decode("utf-8")
-    
-    async with httpx.AsyncClient(timeout=60.0) as client:
-        # Make request
-        response = await client.post(
-            f"{api_url}/process-claim/base64",
-            json={
-                "image_base64": image_base64,
-                "filename": Path(image_path).name
-            }
-        )
-        
-        print(f"Status: {response.status_code}")
-        print(f"Response: {json.dumps(response.json(), indent=2)}")
-        
-        return response.json()
-
-
 async def test_health(api_url: str):
     """Test health endpoint"""
     print(f"🏥 Testing health endpoint")
@@ -73,7 +47,7 @@ async def main():
     if len(sys.argv) > 1:
         api_url = sys.argv[1]
     else:
-        api_url = os.environ.get("API_URL", "http://localhost:8000")
+        api_url = os.environ.get("API_URL", "http://localhost:8080")
     
     # Remove trailing slash
     api_url = api_url.rstrip("/")
@@ -95,16 +69,9 @@ async def main():
         sys.exit(1)
     
     # Test file upload method
-    print("\n📤 Test 1: File Upload Method")
+    print("\n📤 Test: File Upload Method")
     print("=" * 60)
     await test_api_upload(api_url, test_image)
-    
-    print("\n" + "=" * 60)
-    
-    # Test base64 method
-    print("\n📊 Test 2: Base64 Encoding Method")
-    print("=" * 60)
-    await test_api_base64(api_url, test_image)
     
     print("\n" + "=" * 60)
     print("✅ All tests completed!")

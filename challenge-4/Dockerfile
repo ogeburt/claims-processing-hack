@@ -10,12 +10,12 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY challenge-4/workflow_orchestrator.py .
 COPY challenge-4/api_server.py .
 
-# Add challenge-2 scripts for OCR agent
-RUN mkdir -p /app/challenge-2/scripts
-COPY challenge-2/scripts/ocr_agent.py /app/challenge-2/scripts/
+# Add challenge-2 agents for OCR agent
+RUN mkdir -p /app/challenge-2/agents
+COPY challenge-2/agents/ocr_agent.py /app/challenge-2/agents/
 
 # Expose API port
-EXPOSE 8000
+EXPOSE 8080
 
 # Run API server
 CMD ["python", "api_server.py"]

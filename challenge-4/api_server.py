@@ -171,7 +171,7 @@ async def process_claim_base64(request: ClaimProcessRequest):
 if __name__ == "__main__":
     import uvicorn
     
-    port = int(os.environ.get("PORT", 8000))
+    port = int(os.environ.get("PORT", 8080))
     logger.info(f"🚀 Starting Claims Processing API on port {port}")
     
     uvicorn.run(
