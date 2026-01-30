@@ -87,32 +87,8 @@ A powerful multimodal model that can process both text and images with high accu
 
 GPT-4.1-mini offers an excellent balance between cost, speed, and performance for document processing tasks, making it ideal for processing both policy documents and visual claim evidence.
 
-## Part 1 - Image and Claims Processing
-
-Time to extract information from claim images! Please navigate to `scripts/imageprocessing.ipynb` for a detailed implementation of:
-- Processing insurance claim photos and accident documentation
-- Extracting text from images using GPT-4-1-mini vision capabilities
-- Performing OCR on handwritten statements and invoices
-- Structuring extracted data for vectorization
-- Integrating visual claim evidence into Azure AI Search
-
-This notebook showcases multimodal AI processing techniques for analyzing damage photos and extracting critical claim information from visual content.
-
-## Part 2 - Policy Document Processing
-
-Time to process your insurance policy documents! Please navigate to `scripts/policiesprocessing.ipynb` for a comprehensive walkthrough on:
-- Setting up Azure Blob Storage for document management
-- Processing text-based policy documents using GPT-4-1-mini
-- Extracting structured information from policy markdown files
-- Creating vectorized embeddings for semantic search
-- Uploading processed documents to Azure AI Search
-
-This notebook demonstrates how to transform unstructured policy text into a searchable knowledge base that agents can query intelligently.
-
-Great! If you are finished and ready for extra challenges, there's much more to explore!
-
-## Part 3 - Statement Processing with Multiple AI Approaches 
-The `statements_processing` folder contains advanced examples showcasing different AI approaches for processing insurance claim statements. This optional section demonstrates how to choose and implement the right model for your specific use case:
+## Task 1 - Statement Processing with Multiple AI Approaches 
+The `statements_processing` folder contains advanced examples showcasing different AI approaches for processing insurance claim statements. This section demonstrates how to choose and implement the right model for your specific use case. It will also generate the markdown files needed for vectorization in the next part of the challenge:
 
 **GPT Statement Processing (`gpt_statement_processing.py`)**
 - Uses GPT-4-1-mini for intelligent statement analysis
@@ -134,7 +110,32 @@ The `statements_processing` folder contains advanced examples showcasing differe
 
 This comparison helps you understand when to use each approach based on document type, volume, complexity, and cost considerations. Review the implementations to see practical examples of model selection and integration strategies.
 
-## Part 4 - Explore the Full Potential of Mistral Models
+## Task 2 - Image and Claims Processing
+> **Note:** You must run mistral_doc_intelligence.py before starting this part or copy the contents of the `examples/mistral` folder to `./output/mistral`.
+
+Time to extract information from claim images! Please navigate to `scripts/imageprocessing.ipynb` for a detailed implementation of:
+- Processing insurance claim photos and accident documentation
+- Extracting text from images using GPT-4-1-mini vision capabilities
+- Performing OCR on handwritten statements and invoices
+- Structuring extracted data for vectorization
+- Integrating visual claim evidence into Azure AI Search
+
+This notebook showcases multimodal AI processing techniques for analyzing damage photos and extracting critical claim information from visual content.
+
+## Task 3 - Policy Document Processing
+
+Time to process your insurance policy documents! Please navigate to `scripts/policiesprocessing.ipynb` for a comprehensive walkthrough on:
+- Setting up Azure Blob Storage for document management
+- Processing text-based policy documents using GPT-4-1-mini
+- Extracting structured information from policy markdown files
+- Creating vectorized embeddings for semantic search
+- Uploading processed documents to Azure AI Search
+
+This notebook demonstrates how to transform unstructured policy text into a searchable knowledge base that agents can query intelligently.
+
+Great! If you are finished and ready for extra challenges, there's much more to explore!
+
+## Task 4 (optional) - Explore the Full Potential of Mistral Models
 
 Mistral AI offers powerful document understanding capabilities through **Data Annotations** - a feature that enables structured data extraction with precise location information (bounding boxes) for each extracted field.
 
